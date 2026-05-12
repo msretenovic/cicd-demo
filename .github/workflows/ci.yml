@@ -1,0 +1,59 @@
+name: CI Pipeline
+
+# KADA da se pokrene pipeline:
+on:
+  push:
+    branches: [main]        # Svaki push na main granu
+  pull_request:
+    branches: [main]        # Svaki pull request ka main grani
+
+jobs:
+  # Prvi job: pokretanje testova
+  test:
+    name: Pokreni testove
+    runs-on: ubuntu-latest  # Iznajmi Linux masinu od GitHub-a
+
+    steps:
+      # Korak 1: preuzmi kod iz repo-a na runner masinu
+      - name: Preuzmi kod
+        uses: actions/checkout@v4
+
+      # Korak 2: instaliraj Node.js na runner masinu
+      - name: Instaliraj Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # Korak 3: instaliraj sve npm pakete (jest, itd.)
+      - name: Instaliraj zavisnosti
+        run: npm install
+
+      # Korak 4: pokreni linter (proverava stil koda)
+      - name: Pokreni linter
+        run: npm run lint
+
+      # Korak 5: pokreni testove
+      - name: Pokreni testove
+        run: npm test
+
+  # Drugi job: build (radi se SAMO ako test job prodje)
+  build:
+    name: Napravi build
+    runs-on: ubuntu-latest
+    needs: test             # Ceka da "test" job zavrsi uspesno
+
+    steps:
+      - name: Preuzmi kod
+        uses: actions/checkout@v4
+
+      - name: Instaliraj Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instaliraj zavisnosti
+        run: npm install
+
+      - name: Build
+        run: echo "Build uspesan - ovde bi islo npm run build"

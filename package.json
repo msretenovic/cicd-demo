@@ -1,0 +1,13 @@
+{
+  "name": "cicd-demo",
+  "version": "1.0.0",
+  "description": "Moj prvi CI/CD projekat",
+  "main": "src/math.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "echo 'Lint prolazi (placeholder)'"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

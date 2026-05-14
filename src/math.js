@@ -3,7 +3,7 @@ function saberi(a, b) {
 }
 
 function pomnozi(a, b) {
-  return a * b;
+  return a + b;
 }
 
 module.exports = { saberi, pomnozi };

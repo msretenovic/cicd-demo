@@ -3,7 +3,7 @@ function saberi(a, b) {
 }
 
 function pomnozi(a, b) {
-  return a - b;
+  return a * b;  // BUG: mnozi umesto da deli kako je bilo ranije
 }
 
 module.exports = { saberi, pomnozi };
